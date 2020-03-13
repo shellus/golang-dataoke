@@ -1,7 +1,6 @@
 package fetcher
 
 import (
-	"fmt"
 	"sync"
 )
 
@@ -15,12 +14,11 @@ var wg = new(sync.WaitGroup)
 func Run() {
 
 	// 获取页数，全部塞进channel中
-	total := GetTotalPage()
+	totalPage := GetTotalPage()
 
-	fmt.Println(total)
-	//total := 10
-	c = make(chan int, total)
-	for p := 1; p < total; p++ {
+	//totalPage := 10
+	c = make(chan int, totalPage)
+	for p := 1; p < totalPage; p++ {
 		c <- p
 	}
 	close(c)
