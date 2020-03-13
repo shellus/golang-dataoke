@@ -1,6 +1,6 @@
 # golang实现的大淘客商品入库抓取
-多线程抓取：使用goroutine
-抓取完毕自动退出：使用waitGroup实现
+多线程抓取：使用 goroutine 
+抓取完毕自动退出：使用 WaitGroup 实现
 
 ### 使用方法
 1. 下载本库代码

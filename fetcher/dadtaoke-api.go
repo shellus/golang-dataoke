@@ -7,6 +7,7 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"math"
 	"net/http"
 	"sort"
 	"strconv"
@@ -29,6 +30,16 @@ const url = "http://openapi.dataoke.com"
 
 // 只允许 10,50,100,200
 const pageSize = 100
+
+func GetTotalPage() int {
+	items, err := Paginator(1)
+	if err != nil {
+		panic(err.Error())
+	}
+	totalNum := items.TotalNum
+	total := int(math.Ceil(float64(totalNum / pageSize)))
+	return total
+}
 
 func PaginatorIterator(i chan int, o chan *Items, wg *sync.WaitGroup) {
 	for p := range i {

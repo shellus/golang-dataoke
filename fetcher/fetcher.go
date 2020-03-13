@@ -2,7 +2,6 @@ package fetcher
 
 import (
 	"fmt"
-	"math"
 	"sync"
 )
 
@@ -13,20 +12,10 @@ var o = make(chan *Items, 5)
 
 var wg = new(sync.WaitGroup)
 
-func getTotal() int {
-	items, err := Paginator(1)
-	if err != nil {
-		panic(err.Error())
-	}
-	totalNum := items.TotalNum
-	total := int(math.Ceil(float64(totalNum / 100)))
-	return total
-}
-
 func Run() {
 
 	// 获取页数，全部塞进channel中
-	total := getTotal()
+	total := GetTotalPage()
 
 	fmt.Println(total)
 	//total := 10
