@@ -16,11 +16,11 @@ func Run() {
 	// 获取页数，全部塞进channel中
 	totalPage := GetTotalPage()
 
-	//totalPage := 10
 	c = make(chan int, totalPage)
 	for p := 1; p < totalPage; p++ {
 		c <- p
 	}
+	// 塞入完成，就结束chan，这样其他地方range完了就自动退出了
 	close(c)
 
 	// 开启5个消费goroutine 并等待
@@ -33,7 +33,7 @@ func Run() {
 		close(o)
 	}()
 
-	// 消费抓取到的数据, 知道o chan 结束
+	// 消费抓取到的数据, 直到 o chan 结束
 	for items := range o {
 		for _, item := range items.List {
 			//itemChan <- item
