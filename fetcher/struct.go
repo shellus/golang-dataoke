@@ -11,20 +11,20 @@ type Item struct {
 	Title            string
 	Desc             string
 	MainPic          string
-	Cid              int
+	Cid              uint
 	OriginalPrice    float64
 	ActualPrice      float64
-	ShopType         int
-	MonthSales       int
+	ShopType         uint
+	MonthSales       uint
 	SellerId         string
 	ShopName         string
 	CouponPrice      float64
 	CouponConditions string
-	CouponTotalNum   int
-	CouponReceiveNum int
+	CouponTotalNum   uint
+	CouponReceiveNum uint
 	CouponLink       string
-	CommissionRate   interface{}
-	CommissionType   int
+	CommissionRate   float64
+	CommissionType   uint
 	ItemLink         string
 	CouponEndTime    string
 	CouponStartTime  string
@@ -33,7 +33,7 @@ type Item struct {
 type Items struct {
 	PageId   string
 	TotalNum int
-	List     []Item
+	List     []*Item
 }
 
 type Result struct {

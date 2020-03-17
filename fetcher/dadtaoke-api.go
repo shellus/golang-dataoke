@@ -15,15 +15,16 @@ import (
 	"sync"
 )
 
-type Config struct {
+type apiConfig struct {
 	App_secret string
 	App_key    string
 }
 
-var config Config
+var config *apiConfig
 
-func SetConfig(arr Config) {
-	config = arr
+func SetConfig(s string, k string) {
+	config.App_secret = s
+	config.App_key = k
 }
 
 const url = "http://openapi.dataoke.com"
@@ -148,7 +149,7 @@ func request(method string, uri string, options options) (*Result, RequestErr) {
 		panic("BODY JSON ERR:" + err.Error())
 	}
 	if res.Code != 0 {
-		return nil, fmt.Errorf("BODY JSON CODE ERR: %s", string(bodyBytes))
+		return nil, fmt.Errorf("BODY JSON CODE != 0: %s", res.Msg)
 	}
 
 	return res, nil

@@ -1,6 +1,7 @@
 package fetcher
 
 import (
+	"fmt"
 	"sync"
 )
 
@@ -23,7 +24,7 @@ func Run() {
 	// 塞入完成，就结束chan，这样其他地方range完了就自动退出了
 	close(c)
 
-	// 开启5个消费goroutine 并等待
+	// 开启N个消费goroutine 并等待
 	go func() {
 		for i := 0; i < 10; i++ {
 			wg.Add(1)
@@ -33,12 +34,23 @@ func Run() {
 		close(o)
 	}()
 
-	// 消费抓取到的数据, 直到 o chan 结束
-	for items := range o {
-		for _, item := range items.List {
-			//itemChan <- item
-			WriteItem(item)
+	// 商品放入缓存队列
+	wCh := make(chan *Item, 10000)
+	go func() {
+		// 消费抓取到的数据, 直到 o chan 结束
+		for items := range o {
+			for _, item := range items.List {
+				wCh <- item
+			}
 		}
+		close(wCh)
+	}()
+
+	// 单线程写入DB
+	for item := range wCh {
+		WriteItem(item)
 	}
+
+	fmt.Println("done !")
 
 }
