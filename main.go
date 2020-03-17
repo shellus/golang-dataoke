@@ -1,7 +1,7 @@
 package main
 
 import (
-	"./fetcher"
+	"./dadtaoke"
 	"errors"
 	"github.com/joho/godotenv"
 	"log"
@@ -17,13 +17,13 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
-	fetcher.Connect(os.Getenv("DB_DRIVER"), os.Getenv("DB_DSN"))
+	dadtaoke.Connect(os.Getenv("DB_DRIVER"), os.Getenv("DB_DSN"))
 
-	fetcher.SetConfig(os.Getenv("APP_KEY"), os.Getenv("APP_SECRET"))
+	dadtaoke.SetConfig(os.Getenv("APP_KEY"), os.Getenv("APP_SECRET"))
 
-	fetcher.Run()
+	dadtaoke.Run()
 
-	err = fetcher.Close()
+	err = dadtaoke.Close()
 	if err != nil {
 		panic(err)
 	}

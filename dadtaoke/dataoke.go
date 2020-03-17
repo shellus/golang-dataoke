@@ -1,4 +1,4 @@
-package fetcher
+package dadtaoke
 
 import (
 	"fmt"
@@ -16,6 +16,8 @@ func Run() {
 
 	// 获取页数，全部塞进channel中
 	totalPage := GetTotalPage()
+
+	fmt.Printf("total page： %s\n", totalPage)
 
 	c = make(chan int, totalPage)
 	for p := 1; p < totalPage; p++ {
@@ -35,7 +37,7 @@ func Run() {
 	}()
 
 	// 商品放入缓存队列
-	wCh := make(chan *Item, 10000)
+	wCh := make(chan *Item, 300)
 	go func() {
 		// 消费抓取到的数据, 直到 o chan 结束
 		for items := range o {

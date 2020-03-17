@@ -1,4 +1,4 @@
-package fetcher
+package dadtaoke
 
 import (
 	"fmt"
@@ -53,7 +53,7 @@ type Product struct {
 }
 
 func WriteItem(item *Item) {
-	fmt.Println(item.Dtitle)
+	//fmt.Println(item.Dtitle)
 
 	var dbItem Product
 
@@ -127,8 +127,8 @@ func WriteItem(item *Item) {
 
 	db.Where("unique_id = ?", dbItem.UniqueId).First(&user)
 	if user.ID != 0 {
-		fmt.Println("已存在，更新")
-		db.Model(user).Updates(&dbItem)
+		fmt.Println("已存在，跳过")
+		//db.Model(user).Updates(&dbItem)
 	} else {
 		fmt.Println("插入新纪录")
 		db.Create(&dbItem)

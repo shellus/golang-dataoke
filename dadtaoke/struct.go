@@ -1,4 +1,4 @@
-package fetcher
+package dadtaoke
 
 import (
 	"encoding/json"

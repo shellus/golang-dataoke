@@ -1,4 +1,4 @@
-package fetcher
+package dadtaoke
 
 import (
 	"bytes"
@@ -16,15 +16,15 @@ import (
 )
 
 type apiConfig struct {
-	App_secret string
 	App_key    string
+	App_secret string
 }
 
-var config *apiConfig
+var config = &apiConfig{}
 
-func SetConfig(s string, k string) {
-	config.App_secret = s
+func SetConfig(k string, s string) {
 	config.App_key = k
+	config.App_secret = s
 }
 
 const url = "http://openapi.dataoke.com"
@@ -56,6 +56,7 @@ func PaginatorIterator(i chan int, o chan *Items, wg *sync.WaitGroup) {
 }
 
 func Paginator(p int) (*Items, error) {
+	fmt.Printf("page： %s\n", p)
 	options := map[string]string{
 		"pageId":   strconv.Itoa(p),
 		"pageSize": strconv.Itoa(pageSize),
